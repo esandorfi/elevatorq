@@ -14,7 +14,7 @@
 We'll use a **Destination dispatch** elevator control system.  
 Please read about it : [here on elevation.fandom.com](https://elevation.fandom.com/wiki/Destination_dispatch).
 
-![sample](docs\dispatch_elevator_system.png)
+![sample](docs/dispatch_elevator_system.png)
 *ref: a dispatch system in a business building*
 
 But we'll use a mix wide test case instead of only business uses as in an entreprise building. 
