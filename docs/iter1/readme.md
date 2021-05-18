@@ -1,11 +1,14 @@
-# Iteration 1 
+# Elevator Q / Iteration 1 
 
-## see as a product manager
+## See as a Product Manager
 
 
 We'll use a **Destination dispatch** elevator control system.  
 
-Please read about it : [here on elevation.fandom.com](https://elevation.fandom.com/wiki/Destination_dispatch).
+> Destination dispatch is an optimization technique used for multi-elevator installations, which groups passengers for the same destinations into the same elevators, thereby reducing waiting and travel times when compared to a traditional system where all passenger wishing to ascend or descend enter the same elevator and then request their destination. 
+
+ 
+Please read more about it : [here on elevation.fandom.com](https://elevation.fandom.com/wiki/Destination_dispatch).
 
 <img src="dispatch_elevator_system.png" width="500">  
 
@@ -76,12 +79,14 @@ We group elevators from people needs and uses and time :
  
 
 
- ## learn more about an engineer
+ ## See as an Engineer
 
 ### learn from others
 
+- Destination dispatch | Elevator Wiki | Fandom  
+https://elevation.fandom.com/wiki/Destination_dispatch
 
-- Elevator System Design | Object Oriented System Design Interview Question - YouTube
+- Elevator System Design | Object Oriented System Design Interview Question - YouTube  
   https://www.youtube.com/watch?v=siqiJAJWUVg
 
 - Optimization of Elevator Dispatching by Using Genetic Algorithm in Python - Elevator World   
