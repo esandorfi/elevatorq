@@ -4,7 +4,8 @@ https://www.geeksforgeeks.org/look-disk-scheduling-algorithm/
  
 Algorithm: 
 
-    Let Request array represents an array storing indexes of tracks that have been requested in ascending order of their time of arrival. ‘head’ is the position of disk head.
+    Let Request array represents an array storing indexes of tracks that have been requested 
+    in ascending order of their time of arrival. ‘head’ is the position of disk head.
     The initial direction in which head is moving is given and it services in the same direction.
     The head services all the requests one by one in the direction head is moving.
     The head continues to move in the same direction until all the request in this direction are not finished.
@@ -12,7 +13,8 @@ Algorithm:
     Increment the total seek count with this distance.
     Currently serviced track position now becomes the new head position.
     Go to step 5 until we reach at last request in this direction.
-    If we reach where no requests are needed to be serviced in this direction reverse the direction and go to step 3 until all tracks in request array have not been serviced.
+    If we reach where no requests are needed to be serviced in this direction reverse the direction 
+    and go to step 3 until all tracks in request array have not been serviced.
 """
 
 # Python3 program to demonstrate

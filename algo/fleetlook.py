@@ -72,11 +72,20 @@ if __name__ == "__main__":
             "head": 50,
             "direction": "up",
         },
-        {"name": "B", "arr": [36, 29, 14, 20], "head": 10, "direction": "down",},
-        {"name": "C", "arr": [], "head": 0, "direction": "idle",},
+        {
+            "name": "B",
+            "arr": [36, 29, 14, 20],
+            "head": 10,
+            "direction": "down",
+        },
+        {
+            "name": "C",
+            "arr": [],
+            "head": 0,
+            "direction": "idle",
+        },
     ]
 
     for el in elevators:
         print(f"{'-'*50} LIFT {el['arr']}")
         LOOK(el.arr, el.head, el.direction)
-
