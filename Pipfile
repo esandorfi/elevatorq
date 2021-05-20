@@ -18,6 +18,7 @@ markdown = "*"
 django-filter = "*"
 uritemplate = "*"
 whitenoise = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8.2"
