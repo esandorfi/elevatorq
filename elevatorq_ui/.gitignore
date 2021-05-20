@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+dist-ssr
+*.local
+
+# just for the demo
+# we use the dist as a static files and template files for django
+# dist

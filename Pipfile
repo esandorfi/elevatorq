@@ -9,6 +9,14 @@ black = "===21.4b1"
 
 [packages]
 mypy = "*"
+click = "*"
+python-dotenv = "*"
+django = "*"
+django-stubs = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+uritemplate = "*"
 
 [requires]
 python_version = "3.8.2"
