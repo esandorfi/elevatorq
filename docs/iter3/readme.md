@@ -1,10 +1,12 @@
 # Elevator Q / Iteration 3
 
+check the demo at elevatorq.herokuapp.com
+
 ## Duet : Product Manager and Engineer
 
-We simplify our [second iteration](../iter2/readme.md), and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. We keep the technology : python, django api, javascript.
+We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) design thinking iteration, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. We keep the technology : python, django api, javascript.
 
-## Goals UX for an Elevator
+## Goals UX for Elevator Q
 
 ### Clarity : people input and system display
 
@@ -41,12 +43,14 @@ ex: direct stop or bring all elevators to last case and stop
 
 ## Directory structure
 
-| Apps         |                                             |
-| ------------ | ------------------------------------------- |
-| server       | settings for django api server with psql db |
-| elevatorq    | django python app                           |
-| elevatorq_ui | front javascript                            |
-| docs         | thoses readme                               |
+| Apps         |                                                     |
+| ------------ | --------------------------------------------------- |
+| ...          | misc files for project settings                     |
+| docs         | thoses readme                                       |
+| elevatorq    | backend app ( python, django )                      |
+| elevatorq_ui | frontend app ( vitejs, vue3 )                       |
+| server       | django server settings                              |
+| staticfiles  | django package staticfiles, automatically generated |
 
 ## Build
 
@@ -71,3 +75,17 @@ elevatorq_ui\yarn build (keep the dist directory and use to serve asserts and te
 ```
 
 make django default url to elevatorq_ui\dist\index.html
+
+### serve as heroku
+
+collectstatic if packages updated before deploy
+
+```
+python manage.py collectstatic
+```
+
+deploy on elevatorq.herokuapp.com
+
+```
+git push heroku
+```
