@@ -17,6 +17,7 @@ djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 uritemplate = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.8.2"
