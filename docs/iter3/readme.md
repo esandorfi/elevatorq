@@ -47,3 +47,27 @@ ex: direct stop or bring all elevators to last case and stop
 | elevatorq    | django python app                           |
 | elevatorq_ui | front javascript                            |
 | docs         | thoses readme                               |
+
+## Build
+
+### django as backend + vite as frontend
+
+run django server
+
+```
+python manage.py runserver 127.0.0.1:81 (or 8000 by default)
+```
+
+run vite server for dev
+
+```
+elevatorq_ui\yarn dev (no connection with django)
+```
+
+build vite frontend to be served by django
+
+```
+elevatorq_ui\yarn build (keep the dist directory and use to serve asserts and template in django)
+```
+
+make django default url to elevatorq_ui\dist\index.html
