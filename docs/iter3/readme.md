@@ -1,6 +1,6 @@
 # Elevator Q / Iteration 3
 
-check the demo at elevatorq.herokuapp.com
+check the demo at http://elevatorq.herokuapp.com
 
 ## Duet : Product Manager and Engineer
 

@@ -19,7 +19,7 @@ class PositionDoors(Enum):
 
 
 class ElevatorStatus(Enum):
-    """ General Elevator status """
+    """General Elevator status"""
 
     DISABLED = 0
     ENABLED = 1
@@ -27,23 +27,24 @@ class ElevatorStatus(Enum):
 
 
 @dataclass
-class ElevatorDefinition:
-    """ Describe the Elevator properties """
+class BuildingElevator:
+    """Describe the Elevator properties"""
 
     name: str
     id: int
     range_max_floor: int
     range_min_floor: int
-    set_lobby_floor: int = 0
+    lobby_floor: int = 0
     status: ElevatorStatus = ElevatorStatus.DISABLED
     speed_floor: float = 2.1
-    speed_openclose: float = 8.9
+    speed_open: float = 8.9
+    speed_close: float = 8.9
     algo: str = "look"
 
 
 @dataclass
 class ElevatorPosition:
-    """ Temporary elevator position """
+    """Temporary elevator position"""
 
     direction: PositionDirection = PositionDirection.IDLE
     doors: PositionDoors = PositionDoors.CLOSE
@@ -67,8 +68,7 @@ input_people_q = [
 
 
 def validate_input_people(q: List[str]):
-    """ sample q : ["0UP10", "13UP20", "2UP5", "0UP47", "10UP30", "20DOWN0", "20DOWN10"]
-    """
+    """sample q : ["0UP10", "13UP20", "2UP5", "0UP47", "10UP30", "20DOWN0", "20DOWN10"]"""
     regex_mask = re.compile("(\d+)(UP|DOWN)(\d+)")
     for i in q:
         # because of regex mask we sure to get correct typed data, instead raise
