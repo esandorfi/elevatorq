@@ -1,13 +1,15 @@
 <template>
 <div>
 	<NavBar></NavBar>
-		<system-on-off></system-on-off>
+	<system-on-off></system-on-off>
 	<div class="hero">
 		<img alt="logo" src="./assets/elevator-svgrepo-com.svg" width="300" />
 		<h1>Elevator Q</h1>
+		<h4>Waiting to use ? Get a journey outside first.</h4>
+		<p>Of course, you have the architecture ready to read, if you like now.</p>
 	</div>  
 
-	<HelloWorld msg="Hello Vue 3 + Vite" />
+
   </div>
 </template>
 

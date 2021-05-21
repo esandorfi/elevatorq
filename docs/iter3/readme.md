@@ -1,9 +1,13 @@
 # Elevator Q / Iteration 3
 
-check the demo at http://elevatorq.herokuapp.com
-to access the admin, login with user _emmanuel_ and pwd _sandorfi_
+---
 
-## Duet : Product Manager and Engineer
+**[Go for an online demo : elevatorq.herokuapp.com](http://elevatorq.herokuapp.com)**
+
+-   to login the admin : user _admin_, pwd _admin_
+-   _might take a little time to load at the first access_
+
+---
 
 We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) design thinking iteration, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. We keep the technology : python, django api, javascript.
 
@@ -44,15 +48,17 @@ ex: direct stop or bring all elevators to last case and stop
 
 ## Directory structure
 
-| Apps         |                                                     |
-| ------------ | --------------------------------------------------- |
-| ...          | misc files for project settings                     |
-| algo         | sandbox for personnal testing                       |
-| docs         | thoses readme                                       |
-| elevatorq    | backend app ( python, django )                      |
-| elevatorq_ui | frontend app ( vitejs, vue3 )                       |
-| server       | django server settings                              |
-| staticfiles  | django package staticfiles, automatically generated |
+| Apps           |                                                     |
+| -------------- | --------------------------------------------------- |
+| ...            | misc files for project settings                     |
+| docs           | thoses readme                                       |
+| elevatorq      | backend app : orm, admin                            |
+| elevatorq.api  | rest api for the front                              |
+| elevatorq.algo | elevator fleet alogrithms                           |
+| elevatorq_ui   | frontend app ( vitejs, vue3 )                       |
+| sandbox        | code for personnal testing                          |
+| server         | django server settings                              |
+| staticfiles    | django package staticfiles, automatically generated |
 
 ## Build
 
@@ -100,16 +106,32 @@ Before the coding day, check :
 -   FLEET : just get a look...
 -   MODEL : create raw python model and validation for people input
 
-#### Day 1 ( 9am to 1pm )
+#### Part 1
 
-1. Create the orm
+1. Create the orm : [elevatorq.models](../../elevatorq/models.py)
 
 -   PRESSBTNQ
 -   ELEVATORQ
 -   BUILDINGELEVATOR
 
-2. Create the api
+2. Create the api : [elevatorq.api.urls](../../elevatorq/api/urls.py)
 
 -   /api/pressbtnq/
 -   /api/elevatorq/
 -   /api/building/
+
+#### Part 2
+
+1. Algo input and dispatch : [elevatorq.algo.eq](../../elevatorq/algo/eq.py)
+
+## Design thinking
+
+| User interface            | Elevators Administration  |
+| ------------------------- | ------------------------- |
+| ![design_1](design_1.jpg) | ![design_2](design_2.jpg) |
+
+## Build thinking
+
+| Data                    | Algorithm               |
+| ----------------------- | ----------------------- |
+| ![build_1](build_1.jpg) | ![build_2](build_2.jpg) |

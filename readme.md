@@ -10,11 +10,17 @@ For this coding challenge, We had really **three iterations to clarify the speci
 
 We simplify the control system, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. We use this stack : python, django server api, javascript.
 
-**[1) Get the spec](docs/iter3/readme.md)**  
-**[2) Go for a demo](http://elevatorq.herokuapp.com)** - to login the admin : user _emmanuel_, pwd _sandorfi_
+**[1) Check the specifications](docs/iter3/readme.md)**
 
-By Emmanuel Sandorfi, with the double role of Product Manager and Engineer
-Last update : 19 may 2021
+**[2) Go for an online demo : elevatorq.herokuapp.com](http://elevatorq.herokuapp.com)**
+
+-   to login the admin : user _admin_, pwd _admin_
+-   _might take a little time to load at the first access_
+
+By Emmanuel Sandorfi,  
+_with the double role of Product Manager and Engineer_
+
+Last update : may 2021
 
 ---
 

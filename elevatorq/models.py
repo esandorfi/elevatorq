@@ -26,7 +26,7 @@ EQ_DEFAULT_SPEED_CLOSE = 3.7  # in simili seconds, closing door
 EQ_DEFAULT_LOBBY_FLOOR = 0
 
 # extra - support different algorithm by building elevator
-EQ_DEFAULT_ALGO = "elevatorq.look"
+EQ_DEFAULT_ALGO = "elevatorq.algo.look"
 
 
 # ENUM VALUES
