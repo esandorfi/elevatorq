@@ -37,7 +37,7 @@ class DispatchEQ:
     version = 1
 
     def __init__(self):
-        print("DispatchQ v{self.version}")
+        print(f"DispatchQ v{self.version}")
         # _v1.1 -> add filter(status=ElevatorStatus.ENABLED)
         #       -> raise if no elevators available
         self.elevators = BuildingElevator.objects.all()
@@ -125,14 +125,4 @@ class DispatchEQ:
 
 if __name__ == "__main__":
 
-    # Request array
-    arr = [176, 79, 34, 60, 92, 11, 41, 114]
-    head = 50
-
-    direction = "up"
-
-    print("Initial position of head:", head)
-
-    look.LOOK(arr, head, direction)
-
-    # This code is contributed by rag2127
+    DispatchEQ().main()

@@ -7,7 +7,6 @@ def main_start_django():
     curpath = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     )
-    print(curpath)
     sys.path.append(curpath)
 
     import django
@@ -15,4 +14,4 @@ def main_start_django():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "server.settings")
     django.setup()
 
-    print("OK")
+    print("Django setup ok")

@@ -85,3 +85,20 @@ def LOOK(arr, head, direction):
 
     for i in range(len(seek_sequence)):
         print(seek_sequence[i])
+
+
+#
+# test mode
+#
+
+if __name__ == "__main__":
+
+    # Request array
+    arr = [176, 79, 34, 60, 92, 11, 41, 114]
+    head = 50
+
+    direction = "up"
+
+    print("Initial position of head:", head)
+
+    look.LOOK(arr, head, direction)
