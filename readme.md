@@ -1,15 +1,17 @@
+<div align="center">
 <p align="center">
 <img src="docs/images/elevator-svgrepo-com.svg" width="350" alt="Elevator Q">
 
 <h1 align="center">Elevator Q</h1>
 </p>
+</div>
 
 For this coding challenge, We had really **three iterations to clarify the specifications before starting to code**. Insights takes time. Our goal is to contain the coding timeframe in a maximum of two business days, and get a POC ready to use and exchange.
 
 We simplify the control system, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. We use this stack : python, django server api, javascript.
 
 **[1) Get the spec](docs/iter3/readme.md)**  
-**[2) Go for a demo](http://elevatorq.herokuapp.com)**
+**[2) Go for a demo](http://elevatorq.herokuapp.com)** - to login the admin : user _emmanuel_, pwd _sandorfi_
 
 By Emmanuel Sandorfi, with the double role of Product Manager and Engineer
 Last update : 19 may 2021

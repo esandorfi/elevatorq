@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
@@ -24,6 +24,7 @@ from django.views.generic import TemplateView
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from elevatorq.api.urls import router as elevatorqapi
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -31,6 +32,8 @@ urlpatterns = [
         "favicon.ico",
         RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
     ),
+    # load the elevatorq api
+    path("api/", include(elevatorqapi.urls)),
     # we use here the dist from elevatorq_ui vite/js
     path("", TemplateView.as_view(template_name="index.html")),
 ]

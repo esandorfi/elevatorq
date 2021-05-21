@@ -1,6 +1,7 @@
 # Elevator Q / Iteration 3
 
 check the demo at http://elevatorq.herokuapp.com
+to access the admin, login with user _emmanuel_ and pwd _sandorfi_
 
 ## Duet : Product Manager and Engineer
 
@@ -46,6 +47,7 @@ ex: direct stop or bring all elevators to last case and stop
 | Apps         |                                                     |
 | ------------ | --------------------------------------------------- |
 | ...          | misc files for project settings                     |
+| algo         | sandbox for personnal testing                       |
 | docs         | thoses readme                                       |
 | elevatorq    | backend app ( python, django )                      |
 | elevatorq_ui | frontend app ( vitejs, vue3 )                       |
@@ -89,3 +91,25 @@ deploy on elevatorq.herokuapp.com
 ```
 git push heroku
 ```
+
+## Coding day
+
+Before the coding day, check :
+
+-   LOOK from the net : make it work
+-   FLEET : just get a look...
+-   MODEL : create raw python model and validation for people input
+
+#### Day 1 ( 9am to 1pm )
+
+1. Create the orm
+
+-   PRESSBTNQ
+-   ELEVATORQ
+-   BUILDINGELEVATOR
+
+2. Create the api
+
+-   /api/pressbtnq/
+-   /api/elevatorq/
+-   /api/building/
