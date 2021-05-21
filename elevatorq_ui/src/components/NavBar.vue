@@ -5,10 +5,7 @@
 			Elevator Q
 		</a>
 		<div class="d-flex">
-			<div class="form-check form-switch me-5 d-flex align-items-center">
-				<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-				<label class="form-check-label" for="flexSwitchCheckDefault" >&nbsp;system on/off</label>
-			</div>
+
 			
 			<a href="/admin" class="btn btn-dark me-2">admin</a>
 			<div class="dropdown me-2">
