@@ -1,0 +1,58 @@
+[
+	{
+		"url": "http://elevatorq.herokuapp.com/api/building/1/",
+		"name": "A",
+		"algo": "elevatorq.algo.look",
+		"range_min_floor": 0,
+		"range_max_floor": 47,
+		"lobby_floor": 0,
+		"speed_floor": "2.1",
+		"speed_open": "8.2",
+		"speed_close": "3.7",
+		"status": 0,
+		"current_direction": "IDLE",
+		"current_floor": 0
+	},
+	{
+		"url": "http://elevatorq.herokuapp.com/api/building/2/",
+		"name": "B",
+		"algo": "elevatorq.algo.look",
+		"range_min_floor": 0,
+		"range_max_floor": 20,
+		"lobby_floor": 0,
+		"speed_floor": "2.1",
+		"speed_open": "8.4",
+		"speed_close": "3.7",
+		"status": 0,
+		"current_direction": "IDLE",
+		"current_floor": 0
+	},
+	{
+		"url": "http://elevatorq.herokuapp.com/api/building/3/",
+		"name": "C",
+		"algo": "elevatorq.algo.look",
+		"range_min_floor": 20,
+		"range_max_floor": 47,
+		"lobby_floor": 0,
+		"speed_floor": "2.1",
+		"speed_open": "8.4",
+		"speed_close": "3.7",
+		"status": 0,
+		"current_direction": "IDLE",
+		"current_floor": 0
+	},
+	{
+		"url": "http://elevatorq.herokuapp.com/api/building/4/",
+		"name": "THE_VIEW",
+		"algo": "elevatorq.algo.direct",
+		"range_min_floor": 0,
+		"range_max_floor": 47,
+		"lobby_floor": 0,
+		"speed_floor": "2.1",
+		"speed_open": "8.4",
+		"speed_close": "3.7",
+		"status": 0,
+		"current_direction": "IDLE",
+		"current_floor": 0
+	}
+]

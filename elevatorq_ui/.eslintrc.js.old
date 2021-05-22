@@ -1,0 +1,50 @@
+module.exports = {
+  root: true,
+  env: {
+    node: true
+  },
+  extends: ["plugin:vue/vue3-essential", "@vue/standard"],
+  parserOptions: {
+    parser: "babel-eslint"
+  },
+  rules: {
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "vue/html-indent": [
+      "error",
+      2,
+      {
+        attribute: 1,
+        baseIndent: 0,
+        closeBracket: 1,
+        alignAttributesVertically: true,
+        ignores: []
+      }
+    ],
+    "no-tabs": 0,
+    allowIndentationTabs: 0,
+    "vue/html-closing-bracket-newline": [
+      "error",
+      {
+        singleline: "never",
+        multiline: "never"
+      }
+    ],
+    "vue/v-slot-style": [
+      "error",
+      {
+        atComponent: "longform",
+        default: "longform",
+        named: "longform"
+      }
+    ],
+    "vue/component-name-in-template-casing": [
+      "error",
+      "PascalCase",
+      {
+        registeredComponentsOnly: true,
+        ignores: []
+      }
+    ]
+  }
+};
