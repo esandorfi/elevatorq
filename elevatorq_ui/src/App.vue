@@ -9,7 +9,8 @@
       <h4>Waiting to use ? Get a journey outside first.</h4>
       <p>Of course, you have the architecture ready to read, if you like now.</p>
       <p>
-        <strong>sunday alert !</strong> We got one step further in the elevator product.
+        <strong>Saturday alert !</strong> Preparing monday coding, we got one step further
+        in the elevator product.
       </p>
     </div>
 

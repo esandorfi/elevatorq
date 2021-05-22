@@ -47,7 +47,6 @@ const actions = {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        console.log(response, response.json());
         return response.json();
       })
       .then((data) => {
