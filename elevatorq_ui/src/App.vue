@@ -1,22 +1,48 @@
 <template>
   <div>
     <nav-bar></nav-bar>
-    <system-on-off></system-on-off>
+
     <div class="hero">
-      <img alt="logo" src="./assets/elevator-svgrepo-com.svg" width="200" />
+      <img alt="logo" src="./assets/elevator-svgrepo-com.svg" width="250" />
       <h1>Elevator Q</h1>
+
       <h4>Waiting to use ? Get a journey outside first.</h4>
       <p>Of course, you have the architecture ready to read, if you like now.</p>
       <p>
-        _v1.0 : launch<br />
-        _v1.1 : add summary, fetch api buildingq, error alerts and mock result
+        <strong>sunday alert !</strong> We got one step further in the elevator product.
       </p>
     </div>
-    <div class="container-fluid mt-5 p-5 bg-light bg-gradient">
+
+    <div class="container-fluid mt-5 p-5 bg-dark text-light bg-gradient">
+      <h3 align="center" class="mb-3">Welcome to Marriott Marquis downtown Lobby</h3>
+      <system-on-off></system-on-off>
+    </div>
+    <div class="container-fluid px-5 pb-5 bg-dark text-light">
       <div class="row">
-        <div class="col">(q)</div>
-        <div class="col">
-          <h3>Marriott Marquis Lobby</h3>
+        <div class="col-12 col-md-6 bg-dark">
+          <h4 class="mb-5 text-center">Queues</h4>
+
+          <div class="form-group">
+            <label for="pressbtnqFormControlTextarea">(pressbtnq)</label>
+            <textarea
+              class="form-control"
+              id="pressbtnqFormControlTextarea1"
+              rows="10"
+            ></textarea>
+          </div>
+          <div class="form-group mt-3">
+            <label for="elevatorqFormControlTextarea">(elevatorq)</label>
+            <textarea
+              class="form-control"
+              id="elevatorqFormControlTextarea1"
+              rows="10"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <h4 class="mb-5 text-center">Building elevators</h4>
+          <p>You are at the Lobby - floor 0</p>
           <summary-elevators></summary-elevators>
         </div>
       </div>

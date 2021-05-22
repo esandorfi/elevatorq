@@ -50,4 +50,7 @@ export default {
   color: darkgray;
   font-size: 0.8rem;
 }
+.techsize {
+  font-size: 0.8rem;
+}
 </style>

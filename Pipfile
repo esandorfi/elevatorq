@@ -19,6 +19,7 @@ django-filter = "*"
 uritemplate = "*"
 whitenoise = "*"
 gunicorn = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.8.2"

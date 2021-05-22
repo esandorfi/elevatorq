@@ -1,11 +1,11 @@
 <template>
   <div
     v-if="building_elevators_network_error != 'OK'"
-    class="position-fixed bottom-0 end-0"
+    class="position-fixed top-0 end-0"
     style="z-index: 5"
   >
-    <div class="alert alert-dark alert-dismissible fade show techmsg" role="alert">
-      <strong> building_elevators_network_error </strong>
+    <div class="alert alert-danger alert-dismissible fade show techsize" role="alert">
+      <strong> building_elevators_network_error </strong><br />
       {{ building_elevators_network_error }}
       <button
         type="button"

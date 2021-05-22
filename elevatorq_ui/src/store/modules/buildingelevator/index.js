@@ -37,7 +37,7 @@ const actions = {
     console.log("getBuildingElevators fetch", myInit, myHeaders, url);
     fetch(url, {
       method: "GET",
-      mode: "no-cors",
+      // mode: "no-cors",
       headers: {
         "Content-Type": "applications/json"
       }
