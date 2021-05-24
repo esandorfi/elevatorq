@@ -1,32 +1,180 @@
 """
-Dispatch the Queues
+Dispatch the Queues and set database records
+
+Support direct execution for test purpose, 
+in that case, load django env + VERBOSE = True
+>> python eq.py
 """
 
-import utils
-import look
+from typing import Optional
+import sys
+import random
 
+VERBOSE = False  # print console verbose mode
 if __name__ == "__main__":
-    utils.main_start_django()  # quick test purpose
+    import utils
 
-from elevatorq.models import (
-    PressBtnQ,
-    BuildingElevator,
-    ElevatorQ,
-    ElevatorStatus,
-    PositionDirection,
-)
+    utils.main_start_django()
+    VERBOSE = True
 
 
-class ResetDB:
+# load elevatorq data model
+from elevatorq.models import PressBtnQ, BuildingElevator, ElevatorQ
+from elevatorq import appsettings
+
+
+#
+# HELPER FOR PRINT OUTPUT
+#
+
+
+def verbose_headline(h, c=""):
     """
-    reset the elevatorq db for testing purpose
+    print helper to show headline with
+    a string,
+    >> verbose_headline('my headline')
+    a function name,
+    >> verbose_headline(sys._getframe().f_code.co_name)
+    a function name + classname:
+    >> verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+
+    default : VERBOSE=True with in the __name__ == '__main__'
+    future : add toggle global verbose from settings
+
+    """
+    if not VERBOSE:
+        return
+    elif c:
+        print("{:.^50}{}".format(h, c))
+    else:
+        print("{:.^50}".format(h))
+
+
+#
+# FLAGS SYSTEM
+#
+
+
+class FlagsSystem:
+    """
+    Manage records attributs in ElevatorQ Database
     """
 
     def enable_elevators_at_lobby_floor(self):
-        pass
+        """
+        set all buildingelevator to ENABLED, IDLE, FLOOR 0,
+        flush pressbtnq end elevatorq
+        """
+        BuildingElevator.objects.all().update(
+            status=appsettings.ElevatorStatus.ENABLED,
+            current_direction=appsettings.PositionDirection.IDLE,
+            current_floor=appsettings.EQ_DEFAULT_LOBBY_FLOOR,
+        )
+
+    def reset_pressbtnq(self):
+        PressBtnQ.objects.all().delete()
+
+    def reset_elevatorq(self):
+        """in real world, we should insure the elevators go back to lobby"""
+        ElevatorQ.objects.all().delete()
 
 
-class DispatchEQ:
+#
+# RESET DATABASE FOR TEST / DEMO MODE
+#
+
+
+class ResetDatabase(FlagsSystem):
+    """
+    Reset database for demonstration and testing purpose
+    Inherit of 'Flags' database definition object for ElevatorQ
+    """
+
+    def reset(self):
+        """do the reset"""
+        self.reset_pressbtnq()
+        self.reset_elevatorq()
+        self.enable_elevators_at_lobby_floor()
+
+    def fill_elevator_q(self, elevator_name: Optional[str] = ""):
+        """insert fake values for elevators q"""
+        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+        #
+        qs = BuildingElevator.objects.all()
+        if elevator_name:
+            qs = qs.filter(name=elevator_name)
+            if not qs.exists():
+                raise ValueError(
+                    f"No elevator {elevator_name} found in the building elevators settings."
+                )
+
+        try:
+            nb = len(qs)
+            print(f"Find {nb} elevator(s)")
+            for q in qs.iterator(chunk_size=100):
+
+                # get the data from orm and affect to variables
+                # so we continue in orm free algorithm
+                range_min_floor = q.range_min_floor
+                range_max_floor = q.range_max_floor
+                lobby_floor = q.lobby_floor
+
+                # do not include lobby floor in random
+                if lobby_floor == range_min_floor:
+                    range_min_floor += 1
+                # get a random floor
+                start_floor = random.randint(range_min_floor, range_max_floor)
+                # get a random direction
+                d = random.randint(0, 1)
+                direction = (
+                    appsettings.PositionDirection.DOWN
+                    if d
+                    else appsettings.PositionDirection.UP
+                )
+                if direction == appsettings.PositionDirection.DOWN:
+                    # if going down, assume we go the lobby
+                    final_floor = lobby_floor
+                else:
+                    # if going up, assume we found the final floor and we coming from the lobby
+                    final_floor = start_floor
+                    start_floor = 0  # lobby_floor
+
+                print(
+                    f"start_floor {start_floor} direction {direction} final_floor {final_floor}"
+                )
+
+                # add to the queue the steps with a direction
+                # start_floor has an IDLE direction
+                o1 = ElevatorQ.objects.create(
+                    elevator=q,
+                    floor=start_floor,
+                    direction=appsettings.PositionDirection.IDLE,
+                )
+                print(f"{o1} created floor {start_floor}")
+                o2 = ElevatorQ.objects.create(
+                    elevator=q, direction=direction, floor=final_floor
+                )
+
+                print(f"{o2} created foor {final_floor}")
+
+        except Exception as e:
+            print(f"Error {e}")
+
+    def display_elevatorq(self):
+        """display data for test purpose"""
+        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+        #
+        qs = ElevatorQ.objects.all()
+        for q in qs.iterator(chunk_size=100):
+            print(f"{q.elevator} -> {q}")
+
+
+#
+# DISPATCH SYSTEM
+#
+
+
+class DispatchSystem:
     """
     dispatch pressbtn actions to elevators
     use as :
@@ -37,12 +185,11 @@ class DispatchEQ:
     version = 1
 
     def __init__(self):
-        print(f"DispatchQ v{self.version}")
-        # _v1.1 -> add filter(status=ElevatorStatus.ENABLED)
-        #       -> raise if no elevators available
         self.elevators = BuildingElevator.objects.all()
 
     def main(self, btn_code: str = ""):
+        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+        #
         """main function"""
         if not btn_code:
             self.scan_pressbtnq()
@@ -108,7 +255,7 @@ class DispatchEQ:
         ElevatorQ.objects.create(
             elevator=elevator,
             floor=pressbtn.final_floor,
-            direction=PositionDirection.IDLE,
+            direction=appsettings.PositionDirection.IDLE,
         )
 
         # update pressbtnq record
@@ -124,5 +271,24 @@ class DispatchEQ:
 #
 
 if __name__ == "__main__":
+    """
+    while build our first program, we think about the test cases for pytest
+    """
 
-    DispatchEQ().main()
+    """ RESET """
+
+    resetdb = ResetDatabase()
+
+    # test_wrong_elevator_name()
+    # resetdb.fill_elevator_q(elevator_name="toto")
+
+    # test_correct_elevator_name()
+    # resetdb.fill_elevator_q(elevator_name="A")
+
+    resetdb.reset()
+    resetdb.fill_elevator_q()
+    resetdb.display_elevatorq()
+
+    """ DISPATCH """
+
+    DispatchSystem().main()
