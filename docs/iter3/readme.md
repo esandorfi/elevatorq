@@ -1,8 +1,8 @@
 # Elevator Q / Iteration 3 / v1.1
 
-We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) design thinking iteration, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet. 
+We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) design thinking iteration, and focus on the result we want : optimize UX, keep the LOOK algorithm, fixed use cases for the elevators fleet.
 
-*Last documentation update : 24 may 2021*
+_Last documentation update : 24 may 2021_
 
 ---
 
@@ -14,8 +14,6 @@ We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) des
 ---
 
 [[_TOC_]]
-
-
 
 ---
 
@@ -56,30 +54,30 @@ ex: direct stop or bring all elevators to last case and stop
 
 ## Application and directory structure
 
-| Apps           |                                                     |
-| -------------- | --------------------------------------------------- |
-| ...            | misc files for project settings                     |
-| docs           | thoses readme                                       |
-| elevatorq      | backend app : orm, admin                            |
-| elevatorq.api  | rest api for the front                              |
-| elevatorq.algo | elevator fleet alogrithms                           |
-| elevatorq_ui   | frontend app ( vitejs, vue3 )                       |
-| sandbox        | code for personnal testing                          |
-| server         | django server settings                              |
-| staticfiles    | django package staticfiles, automatically generated |
+| Apps               |                                                     |
+| ------------------ | --------------------------------------------------- |
+| ...                | misc files for project settings                     |
+| docs               | thoses readme                                       |
+| **elevatorq**      | backend app : orm, admin                            |
+| **elevatorq.api**  | rest api for the front                              |
+| **elevatorq.algo** | elevator fleet alogrithms                           |
+| **elevatorq_ui**   | frontend app ( vitejs, vue3 )                       |
+| sandbox            | code for personnal testing                          |
+| **server**         | django server settings                              |
+| staticfiles        | django package staticfiles, automatically generated |
 
 We use :
 
-- **django** as backend orm, http and api server
-- **vite/vuejs/bootstrap5** as front interface
-- **heroku** as deployed container with standard sqllite/static : online data are erased at each deploy
-- **mypy** for python typing 
+-   **django** as backend orm, http and api server
+-   **vite/vuejs/bootstrap5** as front interface
+-   **heroku** as deployed container with standard sqllite/static : online data are erased at each deploy
+-   **mypy** for python typing
 
 In future :
 
-- add pytest
-- convert javascript to typescript
-- add jest, cypress
+-   add pytest
+-   convert javascript to typescript
+-   add jest, cypress
 
 ## Coding days
 
@@ -87,11 +85,11 @@ In future :
 
 #### a) Think about the project as Product Manager and an Engineer
 
-- do sketches 
-- design thinking
-- build thinking
-- read the thinking with the constraints and the objectives 
-- iterate again if needed
+-   do sketches
+-   design thinking
+-   build thinking
+-   read the thinking with the constraints and the objectives
+-   iterate again if needed
 
 #### b) Do some python exercises
 
@@ -101,11 +99,11 @@ In future :
 
 #### c) Setup the application and do some front exercises
 
-- install django ecosystem
-- install vite/vuejs ecosystem
-- create bootstrap starting template
-- connect django and vite 
-- deploy on online cloud - this case : heroku
+-   install django ecosystem
+-   install vite/vuejs ecosystem
+-   create bootstrap starting template
+-   connect django and vite
+-   deploy on online cloud - this case : heroku
 
 ### Part 1 : the datas
 
@@ -115,7 +113,7 @@ In future :
 -   `ElevatorQ`
 -   `BuildingElevator`
 
-2. Setup the admin  : [elevatorq.admin](../../elevatorq/admin.py)
+2. Setup the admin : [elevatorq.admin](../../elevatorq/admin.py)
 3. Create the api : [elevatorq.api.urls](../../elevatorq/api/urls.py)
 
 -   `/api/pressbtnq/`
@@ -135,20 +133,20 @@ Start to create the algo system starting by the `PressBtn` scope...
 Start to create test data by the `BuildingElevators` scope...
 
 1. `FlagSystem` : Manage records attributs in ElevatorQ Database
-   1. ``enable_elevators_at_lobby_floor()`
-   2. `reset_pressbtn_q()`
-   3. `reset_elevator_q()`
+    1. ``enable_elevators_at_lobby_floor()`
+    2. `reset_pressbtn_q()`
+    3. `reset_elevator_q()`
 2. `ResetDatabase` : Inherit from `FlagSystem` + Reset database for demonstration and testing purpose
-   1. `reset`
-   2. `fill_elevator_q`
+    1. `reset`
+    2. `fill_elevator_q`
 3. `DispatchSystem` : dispatch actions to elevators
-   1. affect_elevator : *TODO*
-   2. scan_pressbtn_q : *TODO*
-   3. add_btn_code : *TODO*
-   4. calculate_waiting_indicator : *TODO*
-   5. `display_elevator_q` : display data for all elevators
+    1. affect*elevator : \_TODO*
+    2. scan*pressbtn_q : \_TODO*
+    3. add*btn_code : \_TODO*
+    4. calculate*waiting_indicator : \_TODO*
+    5. `display_elevator_q` : display data for all elevators
 4. The algo system defined in elevatorq.appsettings and in the `BuildingElevator` model
-   1. choose between LOOK and DIRECT
+    1. choose between LOOK and DIRECT
 
 Setup
 
@@ -220,8 +218,6 @@ Elevator THE_VIEW q : [0, 47] : <QuerySet [0, 47, 47, 0, 47, 0]>
 
 to be continued...
 
-
-
 ## Sketches
 
 ### Design thinking
@@ -237,6 +233,29 @@ to be continued...
 | ----------------------- | ----------------------- |
 | ![build_1](build_1.jpg) | ![build_2](build_2.jpg) |
 |                         | ![build_3](build_3.jpg) |
+
+## More about the frontend interface
+
+Made with Vite and Vue3 - Javascript
+
+```
+elevatorq_ui
+```
+
+| Apps                         |                                                              |
+| ---------------------------- | ------------------------------------------------------------ |
+| dist                         | build ui from `yarn build` served by django - connected to a template view and a assets static storage |
+| public                       | favicon - duplicate with django server faveico in static     |
+| **src**                      | vue3 application                                             |
+| src.assets                   | images sent to dist\assets (served by django)                |
+| **src.components**           | components with plain bootstrap html                         |
+| **src.components.elevatorq** | specific components connected with the store - elevator summary for the moment |
+| src.json                     | mock json resturn if api failed or for initial build         |
+| **src.store**                | basic store                                                  |
+| **src.store.elevatorq**      | fetch the /api/building/                                     |
+| src.utils                    | server to call with fetching                                 |
+| **index.html**               | home                                                         |
+| .env                         | dev environment                                              |
 
 ## Build and deploy
 
@@ -283,4 +302,3 @@ git push heroku
 v1.0 : initial release for coding challenge (21 may)
 
 v1.1 : build and design enhancement (24 may)
-
