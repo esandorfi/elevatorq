@@ -12,16 +12,19 @@ import random
 
 VERBOSE = False  # print console verbose mode
 if __name__ == "__main__":
-    import utils
 
-    utils.main_start_django()
+    import utils  # type: ignore[code]
+
+    utils.main_start_django()  # type: ignore[code]
+
     VERBOSE = True
-
 
 # load elevatorq data model
 from elevatorq.models import PressBtnQ, BuildingElevator, ElevatorQ
 from elevatorq import appsettings
 
+# sort elevator algorithm
+from elevatorq.algo.look import LOOK
 
 #
 # HELPER FOR PRINT OUTPUT
@@ -71,10 +74,10 @@ class FlagsSystem:
             current_floor=appsettings.EQ_DEFAULT_LOBBY_FLOOR,
         )
 
-    def reset_pressbtnq(self):
+    def reset_pressbtn_q(self):
         PressBtnQ.objects.all().delete()
 
-    def reset_elevatorq(self):
+    def reset_elevator_q(self):
         """in real world, we should insure the elevators go back to lobby"""
         ElevatorQ.objects.all().delete()
 
@@ -182,14 +185,6 @@ class ResetDatabase(FlagsSystem):
             )
             ElevatorQ.objects.create(elevator=q, direction=direction, floor=final_floor)
 
-    def display_elevatorq(self):
-        """display data for test purpose"""
-        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
-        #
-        qs = ElevatorQ.objects.all()
-        for q in qs.iterator(chunk_size=100):
-            print(f"{q.elevator} -> {q}")
-
 
 #
 # DISPATCH SYSTEM
@@ -198,9 +193,11 @@ class ResetDatabase(FlagsSystem):
 
 class DispatchSystem:
     """
-    dispatch pressbtn actions to elevators
+    dispatch actions to elevators
     use as :
     DispatchEQ().main() # to process all
+
+    Dispatch PressBtnActions :
     DispatchEQ().main('0UP30') # to process one action
     """
 
@@ -226,7 +223,7 @@ class DispatchSystem:
         # *TODO* Add a pressbtn manually
         pass
 
-    def scan_pressbtnq(self):
+    def scan_pressbtn_q(self):
         """get all pressbtn not affected to an elevator"""
         qs = PressBtnQ.objects.filter(elevator__isnull=True)
         for pressbtn in qs:
@@ -287,6 +284,29 @@ class DispatchSystem:
         )
         pressbtn.save()
 
+    def display_elevator_q(self):
+        """display data for all elevators"""
+        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+
+        qs = BuildingElevator.objects.all()
+        for q in qs.iterator(chunk_size=100):
+            self.display_elevator(q)
+
+    def display_elevator(self, elevator: "BuildingElevator"):
+        """display specific elevator q"""
+        qs = ElevatorQ.objects.select_related("elevator").filter(elevator=elevator)
+        val = qs.values_list("floor", flat=True)
+        floorq = list(set(val))
+
+        print(
+            f"{elevator} q current_floor {elevator.current_floor} current_direction {elevator.current_direction}: {floorq} : {val}"
+        )
+
+        # floorq2 = []
+        # for q in qs.iterator(chunk_size=100):
+        #     if
+        #      print(f"{q.elevator} -> {q}")
+
 
 #
 # test mode
@@ -310,8 +330,10 @@ if __name__ == "__main__":
     resetdb.reset()
     for i in range(0, 3):
         resetdb.fill_elevator_q()
-    resetdb.display_elevatorq()
 
     """ DISPATCH """
 
-    DispatchSystem().main()
+    display = DispatchSystem()
+    display.display_elevator_q()
+
+    # display.main()

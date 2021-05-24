@@ -85,7 +85,7 @@ In future :
 
 ### Before the coding days
 
-#### Think about the project as Product Manager and an Engineer
+#### a) Think about the project as Product Manager and an Engineer
 
 - do sketches 
 - design thinking
@@ -93,13 +93,13 @@ In future :
 - read the thinking with the constraints and the objectives 
 - iterate again if needed
 
-#### Do some python exercises
+#### b) Do some python exercises
 
 -   LOOK from the net : make it work
 -   FLEET : just get a look...
 -   MODEL : create raw python model and validation for people input
 
-#### Setup the application and do some front exercises
+#### c) Setup the application and do some front exercises
 
 - install django ecosystem
 - install vite/vuejs ecosystem
@@ -124,13 +124,89 @@ In future :
 
 4. Update navbar of the front : [elevatorq_ui](../../elevatorq_ui/readme.md)
 
-### Part 2 : the algo
+### Part 2 : the algo (1/3)
+
+Start to create the algo system starting by the `PressBtn` scope...
 
 1. Algo input and dispatch : [elevatorq.algo.eq](../../elevatorq/algo/eq.py)
 
-### Part 3 : the algo (part 2)
+### Part 3 : the algo (2/3)
 
+Start to create test data by the `BuildingElevators` scope...
 
+1. `FlagSystem` : Manage records attributs in ElevatorQ Database
+   1. ``enable_elevators_at_lobby_floor()`
+   2. `reset_pressbtn_q()`
+   3. `reset_elevator_q()`
+2. `ResetDatabase` : Inherit from `FlagSystem` + Reset database for demonstration and testing purpose
+   1. `reset`
+   2. `fill_elevator_q`
+3. `DispatchSystem` : dispatch actions to elevators
+   1. affect_elevator : *TODO*
+   2. scan_pressbtn_q : *TODO*
+   3. add_btn_code : *TODO*
+   4. calculate_waiting_indicator : *TODO*
+   5. `display_elevator_q` : display data for all elevators
+4. The algo system defined in elevatorq.appsettings and in the `BuildingElevator` model
+   1. choose between LOOK and DIRECT
+
+Setup
+
+```
+# Elevator Algorithm
+# support different algorithm by building elevator
+
+# Use standard LOOK algorithm to order the floor stops
+EQ_ALGO_LOOK = "elevatorq.algo.look"
+
+# Use start_floor <-> final_floor without stoping floors between
+EQ_ALGO_DIRECT = "elevatorq.algo.direct"
+
+# Choices available in models
+EQ_ALGO = (
+    (EQ_ALGO_LOOK, "LOOK System"),
+    (EQ_ALGO_DIRECT, "DIRECT System"),
+)
+EQ_DEFAULT_ALGO = EQ_ALGO_LOOK
+```
+
+How to test :
+
+```
+# elevatorq.algo
+>>> python algo.py
+```
+
+```
+Django setup ok
+.................fill_elevator_q..................ResetDatabase
+Find 5 elevator(s)
+start_floor 34 direction DOWN final_floor 0
+start_floor 3 direction DOWN final_floor 0
+start_floor 30 direction DOWN final_floor 0
+start_floor 34 direction DOWN final_floor 0
+start_floor 0 direction UP final_floor 47
+.................fill_elevator_q..................ResetDatabase
+Find 5 elevator(s)
+start_floor 31 direction DOWN final_floor 0
+start_floor 0 direction UP final_floor 20
+start_floor 33 direction DOWN final_floor 0
+start_floor 0 direction UP final_floor 13
+start_floor 47 direction DOWN final_floor 0
+.................fill_elevator_q..................ResetDatabase
+Find 5 elevator(s)
+start_floor 0 direction UP final_floor 24
+start_floor 14 direction DOWN final_floor 0
+start_floor 33 direction DOWN final_floor 0
+start_floor 0 direction UP final_floor 37
+start_floor 47 direction DOWN final_floor 0
+................display_elevator_q................DispatchSystem
+Elevator A q : [0, 24, 34, 31] : <QuerySet [34, 0, 31, 0, 0, 24]>
+Elevator B q : [0, 3, 20, 14] : <QuerySet [3, 0, 0, 20, 14, 0]>
+Elevator C q : [0, 33, 30] : <QuerySet [30, 0, 33, 0, 33, 0]>
+Elevator D q : [0, 34, 37, 13] : <QuerySet [34, 0, 0, 13, 0, 37]>
+Elevator THE_VIEW q : [0, 47] : <QuerySet [0, 47, 47, 0, 47, 0]>
+```
 
 ### Part 4 : the front
 
@@ -140,7 +216,9 @@ In future :
 4. Manage errors as alerts
 5. Prepare `pressbtnq` and `elevatorq` display
 
+### Part 5 : the algo (3/3)
 
+to be continued...
 
 
 

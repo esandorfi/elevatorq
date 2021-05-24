@@ -81,10 +81,13 @@ def LOOK(arr, head, direction):
         run -= 1
 
     print("Total number of seek operations =", seek_count)
-    print("Seek Sequence is")
+    print("Seek sequence length =", len(seek_sequence))
+    print(f"Seek Sequence is {seek_sequence}")
 
-    for i in range(len(seek_sequence)):
-        print(seek_sequence[i])
+    # for i in range(len(seek_sequence)):
+    #     print(seek_sequence[i])
+
+    return seek_sequence
 
 
 #
@@ -101,4 +104,4 @@ if __name__ == "__main__":
 
     print("Initial position of head:", head)
 
-    look.LOOK(arr, head, direction)
+    LOOK(arr, head, direction)
