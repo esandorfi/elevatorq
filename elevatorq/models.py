@@ -40,6 +40,7 @@ class BuildingElevator(models.Model):
         max_length=100,
         default=appsettings.EQ_DEFAULT_ALGO,
         help_text=_("extra - support different algorithm by building elevator"),
+        choices=appsettings.EQ_ALGO,
     )
     range_min_floor = models.SmallIntegerField(
         default=appsettings.EQ_DEFAULT_MIN_FLOOR, help_text=_("elevator minimal start")

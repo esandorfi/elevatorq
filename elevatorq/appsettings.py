@@ -12,8 +12,11 @@ from django.db import models
 """
 Please increment number and notify 
 when any orm or setting changes are applied
+SETTINGS_ORM_VERSION : 
+1 - initial
+2 - add choices values for 
 """
-SETTINGS_ORM_VERSION = 1
+SETTINGS_ORM_VERSION = 2
 
 
 # SOME DEFAULTS HARD CODED
@@ -31,8 +34,22 @@ EQ_DEFAULT_SPEED_CLOSE = 3.7  # in simili seconds, closing door
 # extra - elevator lobby floor - allow elevator go to lobby or not if min floor > 0
 EQ_DEFAULT_LOBBY_FLOOR = 0
 
-# extra - support different algorithm by building elevator
-EQ_DEFAULT_ALGO = "elevatorq.algo.look"
+
+# Elevator Algorithm
+# support different algorithm by building elevator
+
+# Use standard LOOK algorithm to order the floor stops
+EQ_ALGO_LOOK = "elevatorq.algo.look"
+
+# Use start_floor <-> final_floor without stoping floors between
+EQ_ALGO_DIRECT = "elevatorq.algo.direct"
+
+# Choices available in models
+EQ_ALGO = (
+    (EQ_ALGO_LOOK, "LOOK System"),
+    (EQ_ALGO_DIRECT, "DIRECT System"),
+)
+EQ_DEFAULT_ALGO = EQ_ALGO_LOOK
 
 
 # ENUM VALUES

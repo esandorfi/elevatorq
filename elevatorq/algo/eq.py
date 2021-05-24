@@ -97,7 +97,10 @@ class ResetDatabase(FlagsSystem):
         self.enable_elevators_at_lobby_floor()
 
     def fill_elevator_q(self, elevator_name: Optional[str] = ""):
-        """insert fake values for elevators q"""
+        """
+        insert fake values for elevators q
+        and support different algorithms : LOOK, DIRECT
+        """
         verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
         #
         qs = BuildingElevator.objects.all()
@@ -108,17 +111,22 @@ class ResetDatabase(FlagsSystem):
                     f"No elevator {elevator_name} found in the building elevators settings."
                 )
 
-        try:
-            nb = len(qs)
-            print(f"Find {nb} elevator(s)")
-            for q in qs.iterator(chunk_size=100):
+        nb = len(qs)
+        print(f"Find {nb} elevator(s)")
+        for q in qs.iterator(chunk_size=100):
 
-                # get the data from orm and affect to variables
-                # so we continue in orm free algorithm
-                range_min_floor = q.range_min_floor
-                range_max_floor = q.range_max_floor
-                lobby_floor = q.lobby_floor
+            # get the data from orm and affect to variables
+            # so we continue in orm free algorithm
+            range_min_floor = q.range_min_floor
+            range_max_floor = q.range_max_floor
+            lobby_floor = q.lobby_floor
+            algo = q.algo
 
+            # *TODO* make a function of this
+            if algo == appsettings.EQ_ALGO_LOOK:
+                """
+                manage the LOOK algorithm
+                """
                 # do not include lobby floor in random
                 if lobby_floor == range_min_floor:
                     range_min_floor += 1
@@ -139,23 +147,40 @@ class ResetDatabase(FlagsSystem):
                     final_floor = start_floor
                     start_floor = 0  # lobby_floor
 
-                print(
-                    f"start_floor {start_floor} direction {direction} final_floor {final_floor}"
+            elif algo == appsettings.EQ_ALGO_DIRECT:
+                """
+                manage the DIRECT algorithm
+                """
+                # get a random direction
+                d = random.randint(0, 1)
+                direction = (
+                    appsettings.PositionDirection.DOWN
+                    if d
+                    else appsettings.PositionDirection.UP
                 )
+                if direction == appsettings.PositionDirection.DOWN:
+                    start_floor = range_max_floor
+                    final_floor = range_min_floor
 
-                # add to the queue the steps with a direction
-                # start_floor has an IDLE direction
-                ElevatorQ.objects.create(
-                    elevator=q,
-                    floor=start_floor,
-                    direction=appsettings.PositionDirection.IDLE,
-                )
-                ElevatorQ.objects.create(
-                    elevator=q, direction=direction, floor=final_floor
-                )
+                else:
+                    start_floor = range_min_floor
+                    final_floor = range_max_floor
 
-        except Exception as e:
-            print(f"Error {e}")
+            else:
+                raise ValueError(f"{q} has a not supported system : {q.algo}")
+
+            print(
+                f"start_floor {start_floor} direction {direction} final_floor {final_floor}"
+            )
+
+            # add to the queue the steps with a direction
+            # start_floor has an IDLE direction
+            ElevatorQ.objects.create(
+                elevator=q,
+                floor=start_floor,
+                direction=appsettings.PositionDirection.IDLE,
+            )
+            ElevatorQ.objects.create(elevator=q, direction=direction, floor=final_floor)
 
     def display_elevatorq(self):
         """display data for test purpose"""
@@ -283,7 +308,8 @@ if __name__ == "__main__":
     # resetdb.fill_elevator_q(elevator_name="A")
 
     resetdb.reset()
-    resetdb.fill_elevator_q()
+    for i in range(0, 3):
+        resetdb.fill_elevator_q()
     resetdb.display_elevatorq()
 
     """ DISPATCH """
