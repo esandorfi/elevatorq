@@ -211,9 +211,7 @@ class ElevatorQ(models.Model):
     )
 
     def __str__(self):
-        if self.floor:
-            return _("floor {} direction {} door {}").format(
-                self.floor, self.direction, self.door
-            )
-        else:
-            return _("ElevatorQ : No floor !")
+        # we are sure the variables have a default or are requiered
+        return _("floor {} direction {} door {}").format(
+            self.floor, self.direction, self.door
+        )

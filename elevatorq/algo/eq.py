@@ -145,17 +145,14 @@ class ResetDatabase(FlagsSystem):
 
                 # add to the queue the steps with a direction
                 # start_floor has an IDLE direction
-                o1 = ElevatorQ.objects.create(
+                ElevatorQ.objects.create(
                     elevator=q,
                     floor=start_floor,
                     direction=appsettings.PositionDirection.IDLE,
                 )
-                print(f"{o1} created floor {start_floor}")
-                o2 = ElevatorQ.objects.create(
+                ElevatorQ.objects.create(
                     elevator=q, direction=direction, floor=final_floor
                 )
-
-                print(f"{o2} created foor {final_floor}")
 
         except Exception as e:
             print(f"Error {e}")
