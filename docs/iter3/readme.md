@@ -13,7 +13,11 @@ We simplify our [first](../iter1/readme.md) and [second](../iter2/readme.md) des
 
 ---
 
-[TOC]
+[[_TOC_]]
+
+
+
+---
 
 ## Goals UX for Elevator Q
 

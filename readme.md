@@ -1,10 +1,13 @@
 <div align="center">
 <p align="center">
-<img src="docs/images/elevator-svgrepo-com.svg" width="350" alt="Elevator Q">
+<img src="docs/images/elevator-svgrepo-com.svg" width="250" alt="Elevator Q">
 
 <h1 align="center">Elevator Q</h1>
+
 </p>
 </div>
+
+---
 
 For this coding challenge, We had really **three iterations to clarify the specifications before starting to code**. Insights takes time. Our goal is to contain the coding timeframe in a maximum of two business days, and get a POC ready to use and exchange.
 

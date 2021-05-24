@@ -1,8 +1,8 @@
 <template>
   <div
     v-if="building_elevators_network_error != 'OK'"
-    class="position-fixed top-0 end-0"
-    style="z-index: 5"
+    class="position-fixed"
+    style="z-index: 5; top: 90px; right: 10px"
   >
     <div class="alert alert-danger alert-dismissible fade show techsize" role="alert">
       <strong> building_elevators_network_error </strong><br />

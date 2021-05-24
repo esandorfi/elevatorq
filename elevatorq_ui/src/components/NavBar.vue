@@ -31,7 +31,7 @@
         </div>
       </div>
     </nav>
-    <div class="d-flex justify-content-end me-3">
+    <div class="d-flex justify-content-end bg-light me-3">
       <small class="techmsg">user: admin / pwd: admin</small>
     </div>
   </div>

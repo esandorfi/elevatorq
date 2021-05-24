@@ -17,8 +17,8 @@
       </li>
     </ul>
 
-    <div class="techmsg pt-3">
-      buildinq api or mock json: <br />
+    <div v-if="building_elevators_network_error != 'OK'" class="techmsg pt-3">
+      network error, use mock json: <br />
       {{ building_elevators }}
     </div>
   </div>

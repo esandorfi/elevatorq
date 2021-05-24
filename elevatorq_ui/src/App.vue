@@ -1,50 +1,47 @@
 <template>
   <div>
     <nav-bar></nav-bar>
+    <hero class="d-none"></hero>
 
-    <div class="hero">
-      <img alt="logo" src="./assets/elevator-svgrepo-com.svg" width="250" />
-      <h1>Elevator Q</h1>
+    <div class="container-fluid p-5 bg-dark text-light text-center">
+      <h1 align="center" class="mb-3">Welcome to NYC Marriott Marquis</h1>
+      <img
+        alt="logo"
+        src="./assets/elevator-svgrepo-com.svg"
+        fill="fff"
+        width="200"
+        style="background-color: #fff; padding: 3px; border-radius: 50%"
+      />
 
-      <h4>Waiting to use ? Get a journey outside first.</h4>
-      <p>Of course, you have the architecture ready to read, if you like now.</p>
-      <p>
-        <strong>Saturday alert !</strong> Preparing monday coding, we got one step further
-        in the elevator product.
-      </p>
-    </div>
+      <h2>Elevator Q</h2>
 
-    <div class="container-fluid mt-5 p-5 bg-dark text-light bg-gradient">
-      <h3 align="center" class="mb-3">Welcome to Marriott Marquis downtown Lobby</h3>
       <system-on-off></system-on-off>
     </div>
     <div class="container-fluid px-5 pb-5 bg-dark text-light">
       <div class="row">
-        <div class="col-12 col-md-6 bg-dark">
-          <h4 class="mb-5 text-center">Queues</h4>
+        <div class="col-12 col-md-8 p-5">
+          <h4 class="mb-5 text-center">Welcome to the Lobby - floor 0</h4>
+          <div class="techmsg">(buildingelevators summary)</div>
+          <summary-elevators></summary-elevators>
+        </div>
 
+        <div class="col-12 col-md-4">
           <div class="form-group">
-            <label for="pressbtnqFormControlTextarea">(pressbtnq)</label>
+            <label for="pressbtnqFormControlTextarea" class="techmsg">(pressbtnq)</label>
             <textarea
-              class="form-control"
+              class="form-control bg-light"
               id="pressbtnqFormControlTextarea1"
               rows="10"
             ></textarea>
           </div>
           <div class="form-group mt-3">
-            <label for="elevatorqFormControlTextarea">(elevatorq)</label>
+            <label for="elevatorqFormControlTextarea" class="techmsg">(elevatorq)</label>
             <textarea
-              class="form-control"
+              class="form-control bg-light"
               id="elevatorqFormControlTextarea1"
               rows="10"
             ></textarea>
           </div>
-        </div>
-
-        <div class="col-12 col-md-6">
-          <h4 class="mb-5 text-center">Building elevators</h4>
-          <p>You are at the Lobby - floor 0</p>
-          <summary-elevators></summary-elevators>
         </div>
       </div>
     </div>
@@ -55,6 +52,7 @@
 
 <script setup>
 import NavBar from "./components/NavBar.vue";
+import Hero from "./components/Hero.vue";
 import SystemOnOff from "./components/elevatorq/SystemOnOff.vue";
 import Alerts from "./components/elevatorq/Alerts.vue";
 import SummaryElevators from "./components/elevatorq/SummaryElevators.vue";
