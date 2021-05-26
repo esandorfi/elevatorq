@@ -24,7 +24,7 @@ from django.views.generic import TemplateView
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from elevatorq.api.urls import router as elevatorqapi
+# from elevatorq.api.urls import router as elevatorqapi
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -33,7 +33,7 @@ urlpatterns = [
         RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),
     ),
     # load the elevatorq api
-    path("api/", include(elevatorqapi.urls)),
+    path("api/", include("elevatorq.api.urls")),
     # we use here the dist from elevatorq_ui vite/js
     path("", TemplateView.as_view(template_name="index.html")),
 ]

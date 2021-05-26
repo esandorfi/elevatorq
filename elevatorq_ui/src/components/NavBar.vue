@@ -17,7 +17,19 @@
             >
               api
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="dropdownMenuButton1"
+            >
+              <li>
+                <a class="dropdown-item" href="/api/displayq/">displayq</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/api/waitingindicator/floor/0/"
+                  >waiting indicator - lobby</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" href="/api/building/">api building</a></li>
               <li><a class="dropdown-item" href="/api/elevatorq/">api elevatorq</a></li>
               <li><a class="dropdown-item" href="/api/pressbtnq/">api pressbtnq</a></li>

@@ -24,7 +24,7 @@ from elevatorq.models import PressBtnQ, BuildingElevator, ElevatorQ
 from elevatorq import appsettings
 
 # sort elevator algorithm
-from elevatorq.algo.look import LOOK
+from elevatorq.algo.look import LOOKELEVATOR
 
 #
 # HELPER FOR PRINT OUTPUT
@@ -54,13 +54,13 @@ def verbose_headline(h, c=""):
 
 
 #
-# FLAGS SYSTEM
+# RESET DATABASE FOR TEST / DEMO MODE
 #
 
 
-class FlagsSystem:
+class ResetDatabase:
     """
-    Manage records attributs in ElevatorQ Database
+    Reset database for demonstration and testing purpose
     """
 
     def enable_elevators_at_lobby_floor(self):
@@ -81,22 +81,10 @@ class FlagsSystem:
         """in real world, we should insure the elevators go back to lobby"""
         ElevatorQ.objects.all().delete()
 
-
-#
-# RESET DATABASE FOR TEST / DEMO MODE
-#
-
-
-class ResetDatabase(FlagsSystem):
-    """
-    Reset database for demonstration and testing purpose
-    Inherit of 'Flags' database definition object for ElevatorQ
-    """
-
     def reset(self):
         """do the reset"""
-        self.reset_pressbtnq()
-        self.reset_elevatorq()
+        self.reset_pressbtn_q()
+        self.reset_elevator_q()
         self.enable_elevators_at_lobby_floor()
 
     def fill_elevator_q(self, elevator_name: Optional[str] = ""):
@@ -115,7 +103,6 @@ class ResetDatabase(FlagsSystem):
                 )
 
         nb = len(qs)
-        print(f"Find {nb} elevator(s)")
         for q in qs.iterator(chunk_size=100):
 
             # get the data from orm and affect to variables
@@ -173,7 +160,7 @@ class ResetDatabase(FlagsSystem):
                 raise ValueError(f"{q} has a not supported system : {q.algo}")
 
             print(
-                f"start_floor {start_floor} direction {direction} final_floor {final_floor}"
+                f"{q} -> start_floor {start_floor} direction {direction} final_floor {final_floor}"
             )
 
             # add to the queue the steps with a direction
@@ -205,30 +192,6 @@ class DispatchSystem:
 
     def __init__(self):
         self.elevators = BuildingElevator.objects.all()
-
-    def main(self, btn_code: str = ""):
-        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
-        #
-        """main function"""
-        if not btn_code:
-            self.scan_pressbtnq()
-        else:
-            self.add_btn_code(btn_code)
-            # return elevator name and waiting indicator
-        return
-
-    def add_btn_code(self, btn_code: str):
-        """add another action to the pressbtn table,
-        validate regex"""
-        # *TODO* Add a pressbtn manually
-        pass
-
-    def scan_pressbtn_q(self):
-        """get all pressbtn not affected to an elevator"""
-        qs = PressBtnQ.objects.filter(elevator__isnull=True)
-        for pressbtn in qs:
-            print(f"scan_pressbtnq : find {pressbtn}")
-            self.dispatch_elevator(pressbtn)
 
     def dispatch_elevator(self, pressbtn: PressBtnQ):
         """the algorithm
@@ -284,28 +247,92 @@ class DispatchSystem:
         )
         pressbtn.save()
 
-    def display_elevator_q(self):
+    def display_elevator_q(self, waiting_floor=None):
         """display data for all elevators"""
         verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
 
+        output = {}
         qs = BuildingElevator.objects.all()
         for q in qs.iterator(chunk_size=100):
-            self.display_elevator(q)
+            data = self.display_elevator(q, waiting_floor)
+            output[q.name] = data
 
-    def display_elevator(self, elevator: "BuildingElevator"):
+        return output
+
+    def display_elevator(self, elevator: "BuildingElevator", waiting_floor=None):
         """display specific elevator q"""
         qs = ElevatorQ.objects.select_related("elevator").filter(elevator=elevator)
-        val = qs.values_list("floor", flat=True)
-        floorq = list(set(val))
+        val = qs.values_list("floor", "direction")
 
-        print(
-            f"{elevator} q current_floor {elevator.current_floor} current_direction {elevator.current_direction}: {floorq} : {val}"
-        )
+        listval = list(set(val))
+        floorq = [v[0] for v in listval]
+        print(listval)
+
+        if waiting_floor == None:
+            # MANAGE A Q DISPLAY BASIC OUTPUT
+
+            return listval
+
+        else:
+            # MANAGE THE DISPLAY_INDICATOR
+            floorq.append(waiting_floor)
+
+            # set the current dirction of the elevator
+            curdir = (
+                appsettings.PositionDirection.UP
+                if elevator.current_floor == 0
+                else elevator.current_direction
+            )
+            curfloor = elevator.current_floor
+            print(
+                f"{elevator} => current_floor {elevator.current_floor} current_direction {curdir}"
+            )
+
+            print(f"{elevator} => {val}")
+
+            print(f"{elevator} => {floorq}")
+            seq, lenseq = LOOKELEVATOR(floorq, curfloor, curdir)
+            print(
+                f"{elevator} => waiting_floor {waiting_floor} in lenseq {lenseq} : elevator seq {seq}"
+            )
+
+            return {"waiting_indicator": lenseq, "elevatorq": seq}
 
         # floorq2 = []
         # for q in qs.iterator(chunk_size=100):
         #     if
         #      print(f"{q.elevator} -> {q}")
+
+
+#
+# PRESSBTNQ SYSTEM
+#
+
+
+class PressBtnSystem(DispatchSystem):
+    def main(self, btn_code: str = ""):
+        verbose_headline(sys._getframe().f_code.co_name, self.__class__.__name__)
+        #
+        """main function"""
+        if not btn_code:
+            self.scan_pressbtnq()
+        else:
+            self.add_btn_code(btn_code)
+            # return elevator name and waiting indicator
+        return
+
+    def add_btn_code(self, btn_code: str):
+        """add another action to the pressbtn table,
+        validate regex"""
+        # *TODO* Add a pressbtn manually
+        pass
+
+    def scan_pressbtn_q(self):
+        """get all pressbtn not affected to an elevator"""
+        qs = PressBtnQ.objects.filter(elevator__isnull=True)
+        for pressbtn in qs:
+            print(f"scan_pressbtnq : find {pressbtn}")
+            self.dispatch_elevator(pressbtn)
 
 
 #
@@ -319,21 +346,28 @@ if __name__ == "__main__":
 
     """ RESET """
 
-    resetdb = ResetDatabase()
+    if False:
+        resetdb = ResetDatabase()
 
-    # test_wrong_elevator_name()
-    # resetdb.fill_elevator_q(elevator_name="toto")
+        # test_wrong_elevator_name()
+        # resetdb.fill_elevator_q(elevator_name="toto")
 
-    # test_correct_elevator_name()
-    # resetdb.fill_elevator_q(elevator_name="A")
+        # test_correct_elevator_name()
+        # resetdb.fill_elevator_q(elevator_name="A")
 
-    resetdb.reset()
-    for i in range(0, 3):
-        resetdb.fill_elevator_q()
+        resetdb.reset()
+        for i in range(0, 3):
+            resetdb.fill_elevator_q()
 
     """ DISPATCH """
+    print("")
 
     display = DispatchSystem()
-    display.display_elevator_q()
+
+    displayq = display.display_elevator_q()
+    print(displayq)
+
+    displaylobby = display.display_elevator_q(waiting_floor=0)
+    print(displaylobby)
 
     # display.main()
